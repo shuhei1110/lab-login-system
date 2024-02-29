@@ -11,14 +11,15 @@ do
     echo $line
     output=$(bluetoothctl connect $line & sleep $timeout; kill $! 2>/dev/null)
     if [ "$?" -eq 1 ]; then
-        con_log=$(bluetoothctl connect $line | grep "yes")
+        bluetoothctl disconnect
+        bluetoothctl connect $line | grep "yes"
         if [ "$?" -eq 0 ]; then
             echo "Success!"
         else
-            echo "ELSE2"
+            echo "Failure!"
         fi
     else
-        echo "ELSE1"
+        echo "Time over!"
     fi
-    discon_log=$(bluetoothctl disconnect $line)
+    bluetoothctl disconnect
 done

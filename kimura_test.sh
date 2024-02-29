@@ -6,11 +6,9 @@ function paired_devices() {
     } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
 }
 
-
-
 paired_devices | while read line
 do
     echo $line
-    | bluetoothctl connect $line | grep "Connected: "
+    bluetoothctl connect $line | grep "yes"
     bluetoothctl disconnect $line
 done

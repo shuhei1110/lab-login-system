@@ -10,10 +10,12 @@ paired_devices | while read line
 do
     echo $line
     output=$(bluetoothctl connect $line & sleep $timeout; kill $! 2>/dev/null)
-    if [ $? = 1 ]; then
+    time_flag=$?
+    if [ $time_flag = 1 ]; then
         bluetoothctl disconnect
         bluetoothctl connect $line | grep "yes"
-        if [ $? = 0 ]; then
+        grep_flag=$?
+        if [ $grep_flag = 0 ]; then
             echo "Success!"
         else
             echo "Failure!"

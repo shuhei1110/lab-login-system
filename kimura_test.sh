@@ -9,6 +9,7 @@ function paired_devices() {
 paired_devices | while read line
 do
     echo $line
-    bluetoothctl connect $line | grep "yes"
+    con_log = bluetoothctl connect $line | grep "yes"
+    con_log
     bluetoothctl disconnect $line
 done

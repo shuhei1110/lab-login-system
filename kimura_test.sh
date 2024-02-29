@@ -7,9 +7,10 @@ function paired_devices() {
 }
 
 paired_devices | while read line
+timeout=5
 do
     echo $line
-    timeout 5 con_log=$(bluetoothctl connect $line | grep "yes")
+    output=$((bluetoothctl connect $line | grep "yes") & sleep $timeout; kill $! 2>/dev/null)
     echo $?
     discon_log=$(bluetoothctl disconnect $line)
 done

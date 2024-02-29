@@ -11,3 +11,7 @@ do
     echo $line
 done
 
+paired_devices | while read line
+do
+    echo $line
+done

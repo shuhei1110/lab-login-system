@@ -16,3 +16,4 @@ for item in "${paired_devices}";do
     echo $?
 
     bluetoothctl disconnect "${item}"
+    done

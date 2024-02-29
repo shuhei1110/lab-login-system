@@ -1,9 +1,17 @@
 #!/bin/bash
 
-bluetoothctl
+function paired_devices() {
+  {
+    printf "paired-devices\n\n"
+  } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
+}
 
-devices_stdout = $(paired-devices)
-echo "${devices_stdout}"
+paired_devices
+
+#bluetoothctl
+
+#devices_stdout = $(paired-devices)
+#echo "${devices_stdout}"
 
 #for item "${devices_stdout}";do
 #    connect_stdout = $(connect "${item:7:24}")
@@ -17,5 +25,5 @@ echo "${devices_stdout}"
 #        curl
 #    
 #    disconnect "${item:7:24}"
-    exit
+#    exit
     

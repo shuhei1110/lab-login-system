@@ -7,12 +7,10 @@ function paired_devices() {
 }
 
 paired_devices
-
+device_list=(${paired_devices//\n/ })
 #devices_stdout = $(paired-devices)
 #echo "${devices_stdout}"
 
 for item in "${paired_devices}";do
-    bluetoothctl connect "${item}" | grep "[CHG]"
-    echo $?
-    bluetoothctl disconnect "${item}"
+    echo "${item}"
     done

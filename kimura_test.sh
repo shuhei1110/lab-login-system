@@ -9,9 +9,5 @@ function paired_devices() {
 paired_devices | while read line
 do
     echo $line
-done
-
-paired_devices | while read line
-do
-    echo $line
+    echo "check point"
 done

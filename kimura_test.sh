@@ -11,10 +11,8 @@ paired_devices
 #devices_stdout = $(paired-devices)
 #echo "${devices_stdout}"
 
-for item "${paired_devices}";do
-    bluetoothctl connect "${item}" | grep "[CHG]" | 
+for item in "${paired_devices}";do
+    bluetoothctl connect "${item}" | grep "[CHG]"
     echo $?
 
     bluetoothctl disconnect "${item}"
-    exit
-    

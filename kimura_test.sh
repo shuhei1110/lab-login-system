@@ -6,11 +6,8 @@ function paired_devices() {
   } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
 }
 
-paired_devices
-device_list=(${paired_devices//\n/ })
-#devices_stdout = $(paired-devices)
-#echo "${devices_stdout}"
+paired_devices | while read line
+do
+    echo $line
+done
 
-for item in "${paired_devices}";do
-    echo "${item}"
-    done

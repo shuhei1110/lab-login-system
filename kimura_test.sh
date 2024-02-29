@@ -15,5 +15,5 @@ function is_connected(){
 paired_devices | while read line
 do
     echo $line
-    echo "{$is_connected}"
+    echo $is_connected
 done

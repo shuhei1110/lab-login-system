@@ -10,7 +10,7 @@ paired_devices | while read line
 do
     echo $line
     output=$(bluetoothctl connect $line & sleep $timeout; kill $! 2>/dev/null)
-    if [ "$?" -eq 0 ]; then
+    if [ "$?" -eq 1 ]; then
         con_log=$(bluetoothctl connect $line | grep "yes")
         if [ "$?" -eq 0 ]; then
             echo "Success!"

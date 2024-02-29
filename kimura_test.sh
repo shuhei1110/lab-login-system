@@ -13,8 +13,6 @@ paired_devices
 
 for item in "${paired_devices}";do
     bluetoothctl connect "${item}" | grep "[CHG]"
-    sleep 5
-    echo "hello"
     echo $?
     bluetoothctl disconnect "${item}"
     done

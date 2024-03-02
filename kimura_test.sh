@@ -32,4 +32,4 @@ do
     bluetoothctl disconnect > /dev/null
 done
 
-echo "" >> log.txt
+echo  >> log.txt

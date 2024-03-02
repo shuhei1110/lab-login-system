@@ -9,7 +9,8 @@ function paired_devices() {
 }
 # 時間をテキストに出力
 current_date=$(date "+%Y-%m-%d %H:%M:%S")
-echo -n $current_date >> $LLS_PATH/logs/log.txt
+log_date=$(date '+%Y%m%d')
+echo -n $current_date >> $LLS_PATH/logs/$log_date.log
 # 10秒以内に検知されなければTimeoutを標準出力
 timeout=10
 paired_devices | while read line
@@ -22,8 +23,7 @@ do
         bluetoothctl connect $line | grep "yes" > /dev/null
         grep_flag=$?
         if [ $grep_flag = 0 ]; then
-            echo -n ", ${line}" >> $LLS_PATH/logs/log.txt
-            echo "Success!"
+            echo -n ", ${line}" >> $LLS_PATH/logs/$log_date.log
         else
             echo "Failure!"
         fi
@@ -33,4 +33,4 @@ do
     bluetoothctl disconnect > /dev/null
 done
 
-echo  >> $LLS_PATH/logs/log.txt
+echo  >> $LLS_PATH/logs/$log_date.log

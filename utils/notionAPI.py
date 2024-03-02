@@ -9,12 +9,6 @@ from datetime import datetime
 
 import log_file_ctl
 
-log_path = os.environ.get("LLS_PATH") + "logs/" + datetime.now().strftime('%Y%m%d') + ".log"
-check_bool, *addresses = log_file_ctl.show_addresses(log_path)
-print(log_path)
-print(check_bool)
-print(addresses)
-
 NOTION_API_KEY = os.environ.get("NOTION_API_KEY")
 DATABASE_ID = '1907f7fa7a2a4fafb0bc56044edaabc6'
 
@@ -30,22 +24,40 @@ headers =  {
     'Content-Type': 'application/json',
 }
 
-change_page_list = ["01", "02", "03"]
+log_path = os.environ.get("LLS_PATH") + "logs/" + datetime.now().strftime('%Y%m%d') + ".log"
+check_bool, *addresses = log_file_ctl.show_addresses(log_path)
 
-# for user_id in change_page_list:
-#     print("start: " + user_id)
-#     url = url_head + PAGE_ID_DIR[user_id]
+if check_bool:
 
-#     login_status = '入室'
+    if addresses[0]:
+        print("add[0] ture")
+    else:
+        print("add[0]")
 
-#     json_data = {
-#         'properties': {
-#             'status': {
-#                 'select': {
-#                     'name': login_status
-#                 }
-#             }
-#         }
-#     }
-    # response = requests.patch(url, headers=headers, json=json_data)
-    # print(response)
+    if addresses[1]:
+        print("add[1] ture")
+    else:
+        print("add[1]")
+
+    change_page_list = ["01", "02", "03"]
+
+    # for user_id in change_page_list:
+    #     print("start: " + user_id)
+    #     url = url_head + PAGE_ID_DIR[user_id]
+
+    #     login_status = '入室'
+
+    #     json_data = {
+    #         'properties': {
+    #             'status': {
+    #                 'select': {
+    #                     'name': login_status
+    #                 }
+    #             }
+    #         }
+    #     }
+        # response = requests.patch(url, headers=headers, json=json_data)
+        # print(response)
+
+else:
+    print("false")

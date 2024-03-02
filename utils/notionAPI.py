@@ -30,12 +30,12 @@ check_bool, *addresses = log_file_ctl.show_addresses(log_path)
 if check_bool:
 
     if addresses[0]:
-        print("add[0] ture")
+        print(type(addresses[0]))
     else:
         print("add[0]")
 
     if addresses[1]:
-        print("add[1] ture")
+        print(addresses[1])
     else:
         print("add[1]")
 

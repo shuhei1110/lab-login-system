@@ -1,29 +1,27 @@
 #!/bin/bash
 
 function paired_devices() {
-  {
+    {
     printf "paired-devices\n\n"
-  } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
+    } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
 }
-
-paired_devices
-
-#bluetoothctl
-
-#devices_stdout = $(paired-devices)
-#echo "${devices_stdout}"
-
-#for item "${devices_stdout}";do
-#    connect_stdout = $(connect "${item:7:24}")
-#    if $?;do
-#        exit
-    
-#    if [[${connect_stdout:0:5} == *[CHG]*]];then
-#        curl
-#        echo "hello4"
-#    else
-#        curl
-#    
-#    disconnect "${item:7:24}"
-#    exit
-    
+timeout=10
+paired_devices | while read line
+do
+    echo $line
+    output=$(bluetoothctl connect $line & sleep $timeout; kill $! 2>/dev/null)
+    time_flag=$?
+    if [ $time_flag = 1 ]; then
+        bluetoothctl disconnect
+        bluetoothctl connect $line | grep "yes"
+        grep_flag=$?
+        if [ $grep_flag = 0 ]; then
+            echo "Success!"
+        else
+            echo "Failure!"
+        fi
+    else
+        echo "Time over!"
+    fi
+    bluetoothctl disconnect
+done

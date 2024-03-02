@@ -1,10 +1,15 @@
 #!/bin/bash
 
+# ペアリングされているデバイスを標準出力
 function paired_devices() {
     {
     printf "paired-devices\n\n"
     } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
 }
+# 時間をテキストに出力
+current_date=$(date "+%Y-%m-%d %H:%M:%S")
+echo -n $current_date >> log.txt
+# 10秒以内に検知されなければTimeoutを標準出力
 timeout=10
 paired_devices | while read line
 do
@@ -16,6 +21,7 @@ do
         bluetoothctl connect $line | grep "yes" > /dev/null
         grep_flag=$?
         if [ $grep_flag = 0 ]; then
+            echo -n f", ${line}" >> log.txt
             echo "Success!"
         else
             echo "Failure!"
@@ -25,3 +31,5 @@ do
     fi
     bluetoothctl disconnect > /dev/null
 done
+
+echo "\n" >> log.txt

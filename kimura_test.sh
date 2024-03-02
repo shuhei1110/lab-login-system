@@ -13,7 +13,7 @@ do
     time_flag=$?
     if [ $time_flag = 1 ]; then
         bluetoothctl disconnect > /dev/null
-        bluetoothctl connect $line | grep "yes"
+        bluetoothctl connect $line | grep "yes" > /dev/null
         grep_flag=$?
         if [ $grep_flag = 0 ]; then
             echo "Success!"

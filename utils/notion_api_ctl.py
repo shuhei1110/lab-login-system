@@ -18,10 +18,6 @@ headers = settings.headers
 log_path = os.environ.get("LLS_PATH") + "logs/" + datetime.now().strftime('%Y%m%d') + ".log"
 check_bool, *addresses = log_file_ctl.analyze_log(log_path)
 
-i = None
-if i:
-    print("hogehoge")
-
 def print_datetime(f):
     def wrapper(*args, **kwargs):
         print(f'Start process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')

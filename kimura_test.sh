@@ -21,7 +21,7 @@ do
         bluetoothctl connect $line | grep "yes" > /dev/null
         grep_flag=$?
         if [ $grep_flag = 0 ]; then
-            echo -n f", ${line}" >> log.txt
+            echo -n ", ${line}" >> log.txt
             echo "Success!"
         else
             echo "Failure!"

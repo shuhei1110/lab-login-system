@@ -1,4 +1,5 @@
 #!/bin/bash
+date "+%Y-%m-%d %H:%M:%S"
 
 # ペアリングされているデバイスを標準出力
 function paired_devices() {
@@ -8,7 +9,7 @@ function paired_devices() {
 }
 # 時間をテキストに出力
 current_date=$(date "+%Y-%m-%d %H:%M:%S")
-echo -n $current_date >> log.txt
+echo -n $current_date >> $LLS_PATH/logs/log.txt
 # 10秒以内に検知されなければTimeoutを標準出力
 timeout=10
 paired_devices | while read line
@@ -21,7 +22,7 @@ do
         bluetoothctl connect $line | grep "yes" > /dev/null
         grep_flag=$?
         if [ $grep_flag = 0 ]; then
-            echo -n ", ${line}" >> log.txt
+            echo -n ", ${line}" >> $LLS_PATH/logs/log.txt
             echo "Success!"
         else
             echo "Failure!"
@@ -32,4 +33,4 @@ do
     bluetoothctl disconnect > /dev/null
 done
 
-echo  >> log.txt
+echo  >> $LLS_PATH/logs/log.txt

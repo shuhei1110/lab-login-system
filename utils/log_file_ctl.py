@@ -1,12 +1,16 @@
-"""
+"""log file ctl
 """
 
 def read_last_two_logs(filename):
     try:
         with open(filename, 'r') as file:
             lines = file.readlines()
-            last_two_logs = lines[-2:]
-            return last_two_logs
+            line_count = len(lines)
+            if line_count < 2:
+                return False
+            else:
+                last_two_logs = lines[-2:]
+                return last_two_logs
     except FileNotFoundError:
         return None
 
@@ -19,12 +23,10 @@ def compare_addresses(previous_addresses, current_addresses):
     removed_addresses = previous_addresses - current_addresses
     return added_addresses, removed_addresses
 
-def main():
-    log_file = 'log.txt'
-
+def show_addresses(log_file:str):
     last_two_logs = read_last_two_logs(log_file)
 
-    if last_two_logs and len(last_two_logs) == 2:
+    if last_two_logs:
         previous_log_entry = last_two_logs[0].strip()
         current_log_entry = last_two_logs[1].strip()
 
@@ -34,12 +36,18 @@ def main():
         added, removed = compare_addresses(previous_addresses, current_addresses)
 
         if added:
-            print(f"新しく現れたアドレス: {', '.join(added)}")
+            result_added = added
+        else:
+            result_added = False
         if removed:
-            print(f"削除されたアドレス: {', '.join(removed)}")
+            result_removed = removed
+        else:
+            result_removed = False
+        
+        return [True, result_added, result_removed]
+        
     else:
-        print("前回のログエントリが不足しています。")
+        return [False]
 
-if __name__ == "__main__":
-    main()
+
 

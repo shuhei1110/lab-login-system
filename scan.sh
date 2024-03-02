@@ -8,7 +8,7 @@ function paired_devices() {
     } | bluetoothctl | grep "Device " | sed -r 's/^.*(([0-9A-F]{2}:){5}[0-9A-F]{2}).*$/\1/'
 }
 # 時間をテキストに出力
-current_date=$(date "+%Y-%m-%d %H:%M:%S")
+current_date=$(date "+%Y-%m-%d, %H:%M:%S")
 log_date=$(date '+%Y%m%d')
 echo -n $current_date >> $LLS_PATH/logs/$log_date.log
 # 10秒以内に検知されなければTimeoutを標準出力

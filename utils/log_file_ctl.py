@@ -10,12 +10,14 @@ def read_last_two_logs(filename):
                 return False
             else:
                 last_two_logs = lines[-2:]
+                print(last_two_logs[0])
                 return last_two_logs
     except FileNotFoundError:
         return None
 
 def extract_addresses(log_entry):
     scaned_date, scaned_time, *addresses = log_entry.split(', ')
+    print(scaned_date, scaned_time)
     return set(addresses)
 
 def compare_addresses(previous_addresses, current_addresses):
@@ -38,11 +40,11 @@ def show_addresses(log_file:str):
         if added:
             result_added = added
         else:
-            result_added = False
+            result_added = None
         if removed:
             result_removed = removed
         else:
-            result_removed = False
+            result_removed = None
         
         return [True, result_added, result_removed]
         

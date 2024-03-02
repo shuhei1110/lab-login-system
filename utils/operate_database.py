@@ -1,10 +1,12 @@
+import os
 import argparse
 import sqlite3
 
 parser = argparse.ArgumentParser(description='データベースの操作を行うファイル')
+db_path = os.environ.get("LLS_PATH") + "db/user_database.db"
 
 def create_data(name, bd_addr, notion_id):
-    conn = sqlite3.connect('user_database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('INSERT INTO user_table (name, bd_addr, notion_page_id) VALUES (?, ?, ?)', (name, bd_addr, notion_id))
@@ -13,7 +15,7 @@ def create_data(name, bd_addr, notion_id):
     conn.close()
 
 def read_data():
-    conn = sqlite3.connect('user_database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('SELECT * FROM user_table')
@@ -24,7 +26,7 @@ def read_data():
     conn.close()
 
 def delete_data(id):
-    conn = sqlite3.connect('user_database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('DELETE FROM user_table WHERE id = ?', (id,))
@@ -32,8 +34,21 @@ def delete_data(id):
     conn.commit()
     conn.close()
 
+def search_notion_page_id(bd_addr:str):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT notion_page_id FROM user_table WHERE bd_addr = ?", (bd_addr,))
+    result = cursor.fetchone()
+
+    if result:
+        return result[0]
+    else:
+        return None
+
+
 def update_data(id, new_name, new_bd_addr, new_notion_id):
-    conn = sqlite3.connect('user_database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''

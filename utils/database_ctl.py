@@ -5,7 +5,7 @@ import argparse
 import sqlite3
 from datetime import datetime
 
-db_path = os.environ.get("LLS_PATH") + "db/user_database.db"
+db_path = os.environ.get("LLS_PATH") + "/db/user_database.db"
 
 def create_data(name:str, bd_addr:str, notion_id:str):
     """

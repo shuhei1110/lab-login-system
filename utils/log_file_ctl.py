@@ -3,7 +3,10 @@
 
 from typing import Union
 
-def read_last_two_logs(filename:str) -> Union[bool, list]:
+import database_ctl
+
+
+def read_last_two_logs(filename:str) -> Union[list, None]:
     """
 
         Args:
@@ -20,11 +23,12 @@ def read_last_two_logs(filename:str) -> Union[bool, list]:
             lines = file.readlines()
             line_count = len(lines)
             if line_count < 2:
-                return False
+                return [False, lines[0].replace('\n', '').replace('\r', '')]
             else:
                 last_two_logs = lines[-2:]
-                return last_two_logs
+                return [True, last_two_logs]
     except FileNotFoundError:
+        print("none")
         return None
 
 def extract_addresses(log_entry:str) -> set:
@@ -72,9 +76,9 @@ def analyze_log(log_file:str) -> list:
     """
     last_two_logs = read_last_two_logs(log_file)
 
-    if last_two_logs:
-        previous_log_entry = last_two_logs[0].strip()
-        current_log_entry = last_two_logs[1].strip()
+    if last_two_logs[0]:
+        previous_log_entry = last_two_logs[1][0].strip()
+        current_log_entry = last_two_logs[1][1].strip()
 
         previous_addresses = extract_addresses(previous_log_entry)
         current_addresses = extract_addresses(current_log_entry)
@@ -90,10 +94,27 @@ def analyze_log(log_file:str) -> list:
         else:
             result_removed = None
         
-        return [True, result_added, result_removed]
+        return [result_added, result_removed]
         
     else:
-        return [None]
+        bd_addrs = database_ctl.search_all_bd_addr()
+        bd_addrs = [bd_addr[0] for bd_addr in bd_addrs]
+        previous_addresses = set(bd_addrs)
+        current_addresses = extract_addresses(last_two_logs[1])
+
+
+        added, removed = compare_addresses(previous_addresses, current_addresses)
+
+        if current_addresses != {""}:
+            result_added = current_addresses
+        else:
+            result_added = None
+        if removed:
+            result_removed = removed
+        else:
+            result_removed = None
+        
+        return [result_added, result_removed]
 
 
 

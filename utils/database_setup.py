@@ -12,7 +12,7 @@ import os
 import sqlite3
 
 def main():
-    db_path = os.environ.get("LLS_PATH") + "db/user_database.db"
+    db_path = os.environ.get("LLS_PATH") + "/db/user_database.db"
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 

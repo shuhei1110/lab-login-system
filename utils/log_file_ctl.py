@@ -1,7 +1,20 @@
 """log file ctl
 """
 
-def read_last_two_logs(filename):
+from typing import Union
+
+def read_last_two_logs(filename:str) -> Union[bool, list]:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
     try:
         with open(filename, 'r') as file:
             lines = file.readlines()
@@ -14,16 +27,49 @@ def read_last_two_logs(filename):
     except FileNotFoundError:
         return None
 
-def extract_addresses(log_entry):
+def extract_addresses(log_entry:str) -> set:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
     scaned_date, scaned_time, *addresses = log_entry.split(', ')
     return set(addresses)
 
-def compare_addresses(previous_addresses, current_addresses):
+def compare_addresses(previous_addresses, current_addresses) -> set:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
     added_addresses = current_addresses - previous_addresses
     removed_addresses = previous_addresses - current_addresses
     return added_addresses, removed_addresses
 
-def show_addresses(log_file:str):
+def analyze_log(log_file:str) -> list:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
     last_two_logs = read_last_two_logs(log_file)
 
     if last_two_logs:
@@ -38,16 +84,16 @@ def show_addresses(log_file:str):
         if added:
             result_added = added
         else:
-            result_added = False
+            result_added = None
         if removed:
             result_removed = removed
         else:
-            result_removed = False
+            result_removed = None
         
         return [True, result_added, result_removed]
         
     else:
-        return [False]
+        return [None]
 
 
 

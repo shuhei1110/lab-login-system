@@ -34,3 +34,5 @@ do
 done
 
 echo  >> $LLS_PATH/logs/$log_date.log
+
+python $LLS_PATH/utils/notion_api_ctl.py

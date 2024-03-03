@@ -11,18 +11,19 @@ import log_file_ctl
 import database_ctl
 from config import settings
 
+
 DATABASE_ID = settings.DATABASE_ID
 API_URL = settings.API_URL
 headers = settings.headers
 
 log_path = os.environ.get("LLS_PATH") + "logs/" + datetime.now().strftime('%Y%m%d') + ".log"
-check_bool, *addresses = log_file_ctl.analyze_log(log_path)
+addresses = log_file_ctl.analyze_log(log_path)
 
 def print_datetime(f):
     def wrapper(*args, **kwargs):
-        print(f'Start process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        print(f'--- Start process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} ---')
         f(*args, **kwargs)
-        print(f'End process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        print(f'--- End process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} ---')
     return wrapper
 
 def load_json_data(entered:bool, query:bool=False) -> dict:
@@ -108,33 +109,34 @@ def main():
         Notes:
 
     """
-    if check_bool:
-        if addresses[0]:
-            for bd_addr in addresses[0]:
-                print("change status: " + bd_addr)
-                notion_page_id = database_ctl.search_notion_page_id(bd_addr)
-                if notion_page_id:
-                    response = change_status(notion_page_id=notion_page_id, entered=True)
-                    print("入室記録完了")
-                else:
-                    print("データベースにユーザーが登録されていません")
-        else:
-            print("新しく入室したユーザーはいません")
-
-        if addresses[1]:
-            for bd_addr in addresses[1]:
-                print("change status: " + bd_addr)
-                notion_page_id = database_ctl.search_notion_page_id(bd_addr)
-                if notion_page_id:
-                    response = change_status(notion_page_id=notion_page_id, entered=False)
-                    print("退室記録完了")
-                else:
-                    print("データベースにユーザーが登録されていません")
-        else:
-            print("新しく退室したユーザーはいません")
-
+    if addresses[0] != None:
+        for bd_addr in addresses[0]:
+            print("change status: " + bd_addr)
+            notion_page_id = database_ctl.search_notion_page_id(bd_addr)
+            if notion_page_id:
+                response = change_status(notion_page_id=notion_page_id, entered=True)
+                database_ctl.create_activity_table(bd_addr=bd_addr, status='in')
+                print("入室記録完了")
+            else:
+                print("データベースにユーザーが登録されていません")
     else:
-        print("logファイルが正しくありません")
+        print("新しく入室したユーザーはいません")
+
+    if addresses[1]:
+        for bd_addr in addresses[1]:
+            print("change status: " + bd_addr)
+            notion_page_id = database_ctl.search_notion_page_id(bd_addr)
+            if notion_page_id:
+                response = change_status(notion_page_id=notion_page_id, entered=False)
+                database_ctl.create_activity_table(bd_addr=bd_addr, status='out')
+                print("退室記録完了")
+            else:
+                print("データベースにユーザーが登録されていません")
+    else:
+        print("新しく退室したユーザーはいません")
+
+        
+
 
 if __name__ == "__main__":
     main()

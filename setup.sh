@@ -5,7 +5,7 @@ sudo apt -y install bluetooth bluez
 export LLS_PATH=$(pwd)
 
 current_date=$(date +"%Y%m%d")
-log_file_name="${current_date}.log"
+log_file_name="$LLS_PATH/logs/${current_date}.log"
 touch "$log_file_name"
 
 crontab -l > mycron 2>/dev/null

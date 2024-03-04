@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt -y install bluetooth bluez
+sudo apt -y install bluetooth bluez libbluetooth-dev libudev-dev
 
 export LLS_PATH=$(pwd)
 

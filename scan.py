@@ -1,5 +1,8 @@
+import os
 import subprocess
 from datetime import datetime
+
+LLS_PATH = os.environ.get("LLS_PATH")
 
 # 現在の日時を取得
 current_date = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
@@ -21,13 +24,26 @@ for device in paired_devices():
 
     # デバイスへの接続を試みる
     try:
-        subprocess.run(['bluetoothctl', '--timeout', '10', 'connect', device], check=True, capture_output=True)
-        print("yes")
-        # 接続成功時にログにデバイスを書き込み
-        with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
-            log_file.write(f', {device}')
-    except subprocess.CalledProcessError:
-        print("Failure!")
-    finally:
-        # デバイスへの接続を解除
-        subprocess.run(['bluetoothctl', 'disconnect'], check=True, capture_output=True)
+        result = subprocess.run(['bluetoothctl', '--timeout', '10', 'connect', device], check=True, capture_output=True)
+        stdout_txt = result.stdout.decode('utf-8')
+        print(stdout_txt)
+        #print(result.stderr.decode('utf-8'))
+
+        if "yes" in stdout_txt:
+            print("successful")
+            # 接続成功時にログにデバイスを書き込み
+            with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
+                log_file.write(f', {device}')
+            
+            subprocess.run(['bluetoothctl', 'disconnect'], check=True, capture_output=True)
+
+        else:
+            print("failed")
+        
+    except subprocess.CalledProcessError as e:
+        print("error")
+        print(e.stdout.decode('utf-8'))
+        print(e.stderr.decode('utf-8'))
+
+with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
+    log_file.write('\n')

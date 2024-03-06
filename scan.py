@@ -16,7 +16,7 @@ with open(log_file_path, 'a') as log_file:
 
 # ペアリングされているデバイスを取得
 def paired_devices():
-    command_output = subprocess.check_output(['bluetoothctl', 'paired-devices']).decode('utf-8')
+    command_output = subprocess.check_output(['bluetoothctl', 'devices', 'Paired']).decode('utf-8')
     devices = [line.split()[1] for line in command_output.splitlines() if 'Device' in line]
     return devices
 

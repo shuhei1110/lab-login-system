@@ -7,8 +7,8 @@ import os
 import requests
 from datetime import datetime
 
-import log_file_ctl
-import database_ctl
+from util import log_file_ctl
+from util import database_ctl
 from config import settings
 
 

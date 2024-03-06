@@ -26,18 +26,16 @@ for device in paired_devices():
 
     # デバイスへの接続を試みる
     try:
-        result = subprocess.run(['bluetoothctl', '--timeout', '10', 'connect', device], check=True, capture_output=True)
+        result = subprocess.run(['sudo', 'l2ping', '-c', '3', '-t', '10' device], check=True, capture_output=True)
         stdout_txt = result.stdout.decode('utf-8')
         print(stdout_txt)
         #print(result.stderr.decode('utf-8'))
 
-        if "yes" in stdout_txt:
+        if "received" in stdout_txt:
             print("successful")
             # 接続成功時にログにデバイスを書き込み
             with open(log_file_path, 'a') as log_file:
                 log_file.write(f', {device}')
-            
-            subprocess.run(['bluetoothctl', 'disconnect'], check=True, capture_output=True)
 
         else:
             print("failed")

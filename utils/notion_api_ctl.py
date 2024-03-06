@@ -17,7 +17,6 @@ API_URL = settings.API_URL
 headers = settings.headers
 
 log_path = os.environ.get("LLS_PATH") + "/logs/" + datetime.now().strftime('%Y%m%d') + ".log"
-addresses = log_file_ctl.analyze_log(log_path)
 
 def print_datetime(f):
     def wrapper(*args, **kwargs):
@@ -109,6 +108,7 @@ def notion_api():
         Notes:
 
     """
+    addresses = log_file_ctl.analyze_log(log_path)
     if addresses[0] != None:
         for bd_addr in addresses[0]:
             print("change status: " + bd_addr)

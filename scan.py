@@ -41,8 +41,9 @@ for device in paired_devices():
             print(f'{device}は検出不可')
         
     except subprocess.CalledProcessError as e:
-        print(e.stdout.decode('utf-8'))
-        print(e.stderr.decode('utf-8'))
+        print(f'{device}検出不可')
+        # print(e.stdout.decode('utf-8'))
+        # print(e.stderr.decode('utf-8'))
 
 with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
     log_file.write('\n')

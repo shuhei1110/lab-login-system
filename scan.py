@@ -26,7 +26,7 @@ for device in paired_devices():
 
     # デバイスへの接続を試みる
     try:
-        result = subprocess.run(['sudo', 'l2ping', '-c', '3', '-t', '10' device], check=True, capture_output=True)
+        result = subprocess.run(['sudo', 'l2ping', '-c', '3', '-t', '10', device], check=True, capture_output=True)
         stdout_txt = result.stdout.decode('utf-8')
         print(stdout_txt)
         #print(result.stderr.decode('utf-8'))

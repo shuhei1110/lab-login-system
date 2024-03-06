@@ -8,8 +8,10 @@ LLS_PATH = os.environ.get("LLS_PATH")
 current_date = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
 log_date = datetime.now().strftime('%Y%m%d')
 
-# ログファイルに日時を書き込み
-with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
+log_file_path = LLS_PATH + "/logs/" + log_date + ".log"
+
+# ログファイルに日時を書き込み，ファイルがなければ作成
+with open(log_file_path, 'a') as log_file:
     log_file.write(current_date)
 
 # ペアリングされているデバイスを取得
@@ -32,7 +34,7 @@ for device in paired_devices():
         if "yes" in stdout_txt:
             print("successful")
             # 接続成功時にログにデバイスを書き込み
-            with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
+            with open(log_file_path, 'a') as log_file:
                 log_file.write(f', {device}')
             
             subprocess.run(['bluetoothctl', 'disconnect'], check=True, capture_output=True)
@@ -41,7 +43,6 @@ for device in paired_devices():
             print("failed")
         
     except subprocess.CalledProcessError as e:
-        print("error")
         print(e.stdout.decode('utf-8'))
         print(e.stderr.decode('utf-8'))
 

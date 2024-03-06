@@ -97,7 +97,7 @@ def reset_status():
         response = change_status(notion_page_id=page_id, entered=False)
 
 @print_datetime
-def main():
+def notion_api():
     """
 
         Args:
@@ -135,8 +135,8 @@ def main():
     else:
         print("新しく退室したユーザーはいません")
 
-        
-
+def main():
+    notion_api()
 
 if __name__ == "__main__":
     main()

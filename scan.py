@@ -2,6 +2,8 @@ import os
 import subprocess
 from datetime import datetime
 
+from utils import notion_api_ctl
+
 LLS_PATH = os.environ.get("LLS_PATH")
 
 # 現在の日時を取得
@@ -22,7 +24,6 @@ def paired_devices():
 
 # デバイスごとに処理
 for device in paired_devices():
-    print(device)
 
     # デバイスへの接続を試みる
     try:
@@ -32,13 +33,13 @@ for device in paired_devices():
         #print(result.stderr.decode('utf-8'))
 
         if "received" in stdout_txt:
-            print("successful")
+            print(f'{device}を検出')
             # 接続成功時にログにデバイスを書き込み
             with open(log_file_path, 'a') as log_file:
                 log_file.write(f', {device}')
 
         else:
-            print("failed")
+            print(f'{device}は検出不可')
         
     except subprocess.CalledProcessError as e:
         print(e.stdout.decode('utf-8'))
@@ -46,3 +47,5 @@ for device in paired_devices():
 
 with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
     log_file.write('\n')
+
+notion_api_ctl.notion_api()

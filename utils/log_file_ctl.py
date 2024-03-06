@@ -3,7 +3,7 @@
 
 from typing import Union
 
-import database_ctl
+from utils import database_ctl
 
 
 def read_last_two_logs(filename:str) -> Union[list, None]:

@@ -1,15 +1,13 @@
 """settings
 """
 
-import os
+from config import config
 
-NOTION_API_KEY = os.environ.get("NOTION_API_KEY")
-DATABASE_ID = '1907f7fa7a2a4fafb0bc56044edaabc6'
 API_URL = 'https://api.notion.com/v1/'
 
 headers =  {
         'Notion-Version': '2022-06-28',
-        'Authorization': 'Bearer ' + NOTION_API_KEY,
+        'Authorization': 'Bearer ' + config.NOTION_API_KEY,
         'Content-Type': 'application/json',
     }
 

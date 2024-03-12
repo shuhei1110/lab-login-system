@@ -1,16 +1,16 @@
-import os
 import subprocess
 from datetime import datetime
 
 from utils import notion_api_ctl
+from config import config
 
-LLS_PATH = os.environ.get("LLS_PATH")
+APP_PATH = config.APP_PATH
 
 # 現在の日時を取得
 current_date = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
 log_date = datetime.now().strftime('%Y%m%d')
 
-log_file_path = LLS_PATH + "/logs/" + log_date + ".log"
+log_file_path = APP_PATH + "/logs/" + log_date + ".log"
 
 # ログファイルに日時を書き込み，ファイルがなければ作成
 with open(log_file_path, 'a') as log_file:
@@ -45,7 +45,7 @@ for device in paired_devices():
         # print(e.stdout.decode('utf-8'))
         # print(e.stderr.decode('utf-8'))
 
-with open(f'{LLS_PATH}/logs/{log_date}.log', 'a') as log_file:
+with open(f'{APP_PATH}/logs/{log_date}.log', 'a') as log_file:
     log_file.write('\n')
 
 notion_api_ctl.notion_api()

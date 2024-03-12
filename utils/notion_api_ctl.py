@@ -3,20 +3,18 @@
 
 """
 
-import os
 import requests
 from datetime import datetime
 
 from utils import log_file_ctl
 from utils import database_ctl
-from config import settings
+from config import settings, config
 
-
-DATABASE_ID = settings.DATABASE_ID
+DATABASE_ID = config.DATABASE_ID
 API_URL = settings.API_URL
 headers = settings.headers
 
-log_path = os.environ.get("LLS_PATH") + "/logs/" + datetime.now().strftime('%Y%m%d') + ".log"
+log_path = config.APP_PATH + "/logs/" + datetime.now().strftime('%Y%m%d') + ".log"
 
 def print_datetime(f):
     def wrapper(*args, **kwargs):

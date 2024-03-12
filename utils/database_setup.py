@@ -8,11 +8,12 @@
 
 """
 
-import os
 import sqlite3
 
+from config import config
+
 def main():
-    db_path = os.environ.get("LLS_PATH") + "/db/user_database.db"
+    db_path = config.APP_PATH + "/db/user_database.db"
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 

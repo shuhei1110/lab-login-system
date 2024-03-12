@@ -16,13 +16,6 @@ headers = settings.headers
 
 log_path = config.APP_PATH + "/logs/" + datetime.now().strftime('%Y%m%d') + ".log"
 
-def print_datetime(f):
-    def wrapper(*args, **kwargs):
-        print(f'--- Start process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} ---')
-        f(*args, **kwargs)
-        print(f'--- End process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} ---')
-    return wrapper
-
 def load_json_data(entered:bool, query:bool=False) -> dict:
     """config/settings.pyからHTTPリクエスト用のJSONをロード
 
@@ -93,7 +86,6 @@ def reset_status():
     for page_id in page_ids:
         response = change_status(notion_page_id=page_id, entered=False)
 
-@print_datetime
 def notion_api():
     """
 

@@ -1,1 +1,3 @@
-sudo /etc/init.d/cron stop
+#!/bin/bash
+
+sudo systemctl stop cron

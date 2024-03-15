@@ -363,6 +363,8 @@ def main():
             thu = check_input("木曜日: ")
             fri = check_input("金曜日: ")
             sat = check_input("土曜日: ")
+            point = int(input("朝活ポイント: "))
+            update_asakatu_data(user_id, sun, mon, tue, wed, thu, fri, sat, point)
         else:
             print("存在するTableを指定してください")
     elif args.operation == 'delete':

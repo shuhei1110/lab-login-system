@@ -182,8 +182,6 @@ def search_asakatu(user_id:str, selected_week:str) -> str:
     cursor.execute("SELECT {} FROM asakatu_table WHERE user_id = ?".format(selected_week), (user_id,))
     result = cursor.fetchone()
 
-    print(result)
-
     if result:
         return result[0]
     else:
@@ -276,6 +274,27 @@ def delete_asakatu_data(user_id:str):
 
     conn.commit()
     conn.close()
+
+def check_activity_exists(user_id:str, day:str, time_threshold:str):
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT EXISTS(SELECT 1 FROM activity_table WHERE user_id = ? AND day = ? AND time >= ?)", (user_id, day, time_threshold))
+    exists = cursor.fetchone()[0]
+    conn.close()
+
+    return exists
 
 def check_input(prompt:str):
     while True:

@@ -11,7 +11,7 @@ headers =  {
         'Content-Type': 'application/json',
     }
 
-json_data_entered = {
+json_data_in = {
     'properties': {
         'status': {
             'select': {
@@ -21,7 +21,7 @@ json_data_entered = {
     }
 }
 
-json_data_notentered = {
+json_data_out = {
     'properties': {
         'status': {
             'select': {
@@ -31,7 +31,7 @@ json_data_notentered = {
     }
 }
 
-json_data_entered_filter = {
+json_data_in_filter = {
     'filter': {
         'property': 'status', 
             'select': {
@@ -40,7 +40,7 @@ json_data_entered_filter = {
         }
     }
 
-json_data_notentered_filter = {
+json_data_out_filter = {
     'filter': {
         'property': 'status', 
             'select': {
@@ -48,3 +48,25 @@ json_data_notentered_filter = {
             }
         }
     }
+
+def make_json_data_point(point:int) -> dict:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    json_data = {
+        'properties': {
+            'point': {
+                'number': point 
+            }
+        }
+    }
+
+    return json_data

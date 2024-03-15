@@ -257,7 +257,7 @@ def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
     conn.commit()
     conn.close()
 
-def update_asakatu_point(user_id:str):
+def update_asakatu_point(user_id:str) -> int:
     """
 
         Args:
@@ -286,6 +286,8 @@ def update_asakatu_point(user_id:str):
     conn.commit()
     
     conn.close()
+
+    return point
 
 
 def delete_asakatu_data(user_id:str):

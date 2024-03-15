@@ -26,24 +26,24 @@ def load_json_data(entered:bool, query:bool=False) -> dict:
             query(bool): ページIDを取得
 
         Responses
-            settings.json_data_entered_filter(dict): 入室になっているユーザーのIDを取得
-            settings.json_data_entered(dict): 入室に変更
-            settings.json_data_notentered_filter(dict): 退室になっているユーザーのIDを取得
-            settings.json_data_notentered(dict): 退室に変更
+            settings.json_data_in_filter(dict): 入室になっているユーザーのIDを取得
+            settings.json_data_in(dict): 入室に変更
+            settings.json_data_out_filter(dict): 退室になっているユーザーのIDを取得
+            settings.json_data_out(dict): 退室に変更
 
         Notes:
 
     """
     if entered:
         if query:
-            return settings.json_data_entered_filter
+            return settings.json_data_in_filter
         else:
-            return settings.json_data_entered
+            return settings.json_data_in
     else:
         if query:
-            return settings.json_data_notentered_filter
+            return settings.json_data_out_filter
         else:
-            return settings.json_data_notentered
+            return settings.json_data_out
 
 
 def get_page_ids(entered:bool) -> list:
@@ -83,6 +83,24 @@ def change_status(notion_page_id:str, entered:bool) -> dict:
     
     return response
 
+def change_point(notion_page_id:str, point:int) -> dict:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    json_data = settings.make_json_data_point(point=point)
+    url = API_URL + "pages/" + str(notion_page_id)
+    response = requests.patch(url, headers=headers, json=json_data)
+    
+    return response
+
 def reset_status():
     page_ids = get_page_ids(entered=True)
     for page_id in page_ids:
@@ -115,7 +133,8 @@ def notion_api():
                 if result == 1:
                     exists = database_ctl.check_activity_exists(user_id=user_id, time_threshold=time_threshold)
                     if exists == 1:
-                        database_ctl.update_asakatu_point(user_id=user_id)
+                        point = database_ctl.update_asakatu_point(user_id=user_id)
+                        change_point(notion_page_id=notion_page_id, point=point)
                 
                 
             else:

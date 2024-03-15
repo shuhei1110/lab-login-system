@@ -345,7 +345,7 @@ def main():
         if table == "user_table":
             id_to_delete = input('削除するデータのID: ')
             delete_data(id_to_delete)
-        else table == "asakatu_table":
+        elif table == "asakatu_table":
             user_id = input("削除するユーザーID: ")
             delete_asakatu_data(user_id)
         else:

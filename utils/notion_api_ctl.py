@@ -107,6 +107,10 @@ def notion_api():
                 response = change_status(notion_page_id=notion_page_id, entered=True)
                 database_ctl.create_activity_table(bd_addr=bd_addr, status='in')
                 print("入室記録完了")
+
+                user_id = database_ctl.search_user_id(bd_addr=bd_addr)
+                result = database_ctl.search_asakatu(user_id=user_id, "fri")
+                print(f'resutl: {result}')
             else:
                 print("データベースにユーザーが登録されていません")
     else:

@@ -141,6 +141,52 @@ def search_all_bd_addr():
     else:
         return None
 
+def search_user_id(bd_addr:str) -> str:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT user_id FROM user_table WHERE bd_addr = ?", (bd_addr,))
+    result = cursor.fetchone()
+
+    if result:
+        return result[0]
+    else:
+        return None
+
+def search_asakatu(user_id:str, selected_week:str) -> str:
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT ? FROM asakatu_table WHERE user_id = ?", (selected_week, user_id))
+    result = cursor.fetchone()
+
+    if result:
+        return result[0]
+    else:
+        return None
+
 def create_activity_table(bd_addr:str, status:str):
     """
 
@@ -181,6 +227,50 @@ def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute('INSERT INTO asakatu_table (user_id, sun, mon, tue, wed, thu, fri, sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat))
+
+    conn.commit()
+    conn.close()
+
+def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str):
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        UPDATE asakatu_table
+        SET sun = ?, mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?
+        WHERE user_id = ?
+    ''', (sun, mon, tue, wed, thu, fri, sat, user_id))
+
+    conn.commit()
+    conn.close()
+
+def delete_asakatu_data(user_id:str):
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute('DELETE FROM asakatu_table WHERE user_id = ?', (user_id,))
 
     conn.commit()
     conn.close()
@@ -232,14 +322,34 @@ def main():
         table = input('選択するTable: ')
         read_data(table=table)
     elif args.operation == 'update':
-        id_to_update = input('更新するデータのID: ')
-        new_name = input('新しい名前: ')
-        new_bd_addr = input('新しいBD_ADDR: ')
-        new_notion_id = input('新しいNotion Page ID: ')
-        update_data(id_to_update, new_name, new_bd_addr, new_notion_id)
+        table = input('選択するTable: ')
+        if table == "user_table":
+            id_to_update = input('更新するデータのID: ')
+            new_name = input('新しい名前: ')
+            new_bd_addr = input('新しいBD_ADDR: ')
+            new_notion_id = input('新しいNotion Page ID: ')
+            update_data(id_to_update, new_name, new_bd_addr, new_notion_id)
+        elif table == "asakatu_table":
+            id_to_update = input('更新するユーザーのID: ')
+            sun = check_input("日曜日: ")
+            mon = check_input("月曜日: ")
+            tue = check_input("火曜日: ")
+            wed = check_input("水曜日: ")
+            thu = check_input("木曜日: ")
+            fri = check_input("金曜日: ")
+            sat = check_input("土曜日: ")
+        else:
+            print("存在するTableを指定してください")
     elif args.operation == 'delete':
-        id_to_delete = input('削除するデータのID: ')
-        delete_data(id_to_delete)
+        table = input('選択するTable: ')
+        if table == "user_table":
+            id_to_delete = input('削除するデータのID: ')
+            delete_data(id_to_delete)
+        else table == "asakatu_table":
+            user_id = input("削除するユーザーID: ")
+            delete_asakatu_data(user_id)
+        else:
+            print("存在するTableを指定してください")
 
 
 if __name__ == "__main__":

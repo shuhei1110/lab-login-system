@@ -179,7 +179,7 @@ def search_asakatu(user_id:str, selected_week:str) -> str:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT ? FROM asakatu_table WHERE user_id = 2", (selected_week))
+    cursor.execute("SELECT {} FROM asakatu_table WHERE user_id = ?".format(selected_week), (user_id))
     result = cursor.fetchone()
 
     print(result)

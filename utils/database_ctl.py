@@ -156,7 +156,7 @@ def search_user_id(bd_addr:str) -> str:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT user_id FROM user_table WHERE bd_addr = ?", (bd_addr,))
+    cursor.execute("SELECT id FROM user_table WHERE bd_addr = ?", (bd_addr,))
     result = cursor.fetchone()
 
     if result:

@@ -275,11 +275,18 @@ def update_asakatu_point(user_id:str):
     cursor.execute("SELECT point FROM asakatu_table WHERE user_id = ?", (user_id,))
     result = cursor.fetchone()
     current_point = result[0]
+
+    point = current_point + 1
+
+    cursor.execute('''
+        UPDATE asakatu_table
+        SET point = ?
+        WHERE user_id = ?
+    ''', (point, user_id))
     
     conn.close()
 
     print(current_point)
-    print(type(current_point))
 
 
 def delete_asakatu_data(user_id:str):

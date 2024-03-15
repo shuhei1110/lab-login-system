@@ -290,7 +290,7 @@ def check_activity_exists(user_id:str, day:str, time_threshold:str):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT EXISTS(SELECT * FROM activity_table WHERE user_id = ? AND day = '2024-03-15' AND time >= ?)", (user_id, time_threshold))
+    cursor.execute("SELECT EXISTS(SELECT * FROM activity_table WHERE user_id = ? AND day = ? AND time >= ?)", (user_id, day, time_threshold))
     exists = cursor.fetchone()[0]
     conn.close()
 

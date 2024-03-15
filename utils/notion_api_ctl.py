@@ -16,6 +16,8 @@ headers = settings.headers
 
 log_path = config.APP_PATH + "/logs/" + datetime.now().strftime('%Y%m%d') + ".log"
 
+time_threshold = config.time_threshold
+
 def load_json_data(entered:bool, query:bool=False) -> dict:
     """config/settings.pyからHTTPリクエスト用のJSONをロード
 
@@ -110,7 +112,8 @@ def notion_api():
 
                 user_id = database_ctl.search_user_id(bd_addr=bd_addr)
                 result = database_ctl.search_asakatu(user_id=user_id, selected_week="fri")
-                exists = database_ctl.check_activity_exists(user_id=user_id, day=datetime.now().strftime('%Y%m%d'), time_threshold="'12:00:00'")
+                formatted_date = "'" + datetime.now().strftime('%Y-%m-%d') + "'"
+                exists = database_ctl.check_activity_exists(user_id=user_id, day=formatted_date, time_threshold=time_threshold)
                 print(f'result: {result}')
                 print(exists)
             else:

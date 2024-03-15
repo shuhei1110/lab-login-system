@@ -41,6 +41,22 @@ def main():
 
     conn.commit()
 
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS asakatu_table (
+            user_id INTEGER PRIMARY KEY,
+            sun BOOLEAN DEFAULT 0,
+            mon BOOLEAN DEFAULT 0,
+            tue BOOLEAN DEFAULT 0,
+            wed BOOLEAN DEFAULT 0,
+            thu BOOLEAN DEFAULT 0,
+            fri BOOLEAN DEFAULT 0,
+            sat BOOLEAN DEFAULT 0,
+            FOREIGN KEY (user_id) REFERENCES user_table(id)
+        )
+    ''')
+
+    conn.commit()
+
     conn.close()
 
 if __name__ == "__main__":

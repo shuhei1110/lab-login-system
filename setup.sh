@@ -28,8 +28,11 @@ export APP_PATH=$(pwd)
 crontab -l > mycron 2>/dev/null
 echo "LANG=ja_JP.UTF-8" >> mycron
 echo "PATH=$PATH" >> mycron
-echo "*/1 * * * * sudo /usr/bin/python $APP_PATH/scan.py" >> mycron
+echo "*/5 * * * * sudo /usr/bin/python $APP_PATH/app" >> mycron
 crontab mycron
 rm mycron
 
 sudo systemctl restart cron
+
+# データベースのセットアップ
+python $APP_PATH/utils/database_setup.py

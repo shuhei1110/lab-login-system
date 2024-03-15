@@ -167,6 +167,31 @@ def create_activity_table(bd_addr:str, status:str):
     conn.commit()
     conn.close()
 
+def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str):
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO asataku_table (user_id, sun, mon, tue, wed, thu, fri, sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat))
+
+    conn.commit()
+    conn.close()
+
+def check_input(prompt:str):
+    while True:
+        user_input = input(prompt)
+        if user_input in {"0", "1"}:
+            return user_input
+        print("0か1で入力してください")
+
 def main():
     """
 
@@ -185,12 +210,24 @@ def main():
     args = parser.parse_args()
 
     if args.operation == 'create':
-        name = input('名前: ')
-        bd_addr = input('BD_ADDR: ')
-        notion_id = input('Notion Page ID: ')
-        create_data(name, bd_addr, notion_id)
+        table = input('選択するTable: ')
+        if table == "user_table":
+            name = input('名前: ')
+            bd_addr = input('BD_ADDR: ')
+            notion_id = input('Notion Page ID: ')
+            create_data(name, bd_addr, notion_id)
+        elif table == "asakatu_table":
+            user_id = input("ユーザーID: ")
+            sun = check_input("日曜日: ")
+            mon = check_input("月曜日: ")
+            tue = check_input("火曜日: ")
+            wed = check_input("水曜日: ")
+            thu = check_input("木曜日: ")
+            fri = check_input("金曜日: ")
+            sat = check_input("土曜日: ")
+            create_asataku_data(user_id, sun, mon, tue, wed, thu, fri, sat)
     elif args.operation == 'read':
-        table = input('Table: ')
+        table = input('選択するTable: ')
         read_data(table=table)
     elif args.operation == 'update':
         id_to_update = input('更新するデータのID: ')

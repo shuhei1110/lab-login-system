@@ -110,7 +110,7 @@ def notion_api():
 
                 user_id = database_ctl.search_user_id(bd_addr=bd_addr)
                 result = database_ctl.search_asakatu(user_id=user_id, selected_week="fri")
-                exists = database_ctl.check_activity_exists(user_id=user_id, time_threshold="12:00:00")
+                exists = database_ctl.check_activity_exists(user_id=user_id, day=datetime.now().strftime('%Y%m%d'), time_threshold="12:00:00")
                 print(f'result: {result}')
                 print(exists)
             else:

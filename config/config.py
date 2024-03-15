@@ -1,4 +1,4 @@
-APP_PATH = "/Users/shuhei/WorkSpace/LabLoginSystem"
+APP_PATH = ""
 NOTION_API_KEY = ""
 DATABASE_ID = ""
 

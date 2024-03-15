@@ -215,7 +215,7 @@ def create_activity_table(bd_addr:str, status:str):
     conn.commit()
     conn.close()
 
-def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str):
+def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str, point:int):
     """
 
         Args:
@@ -228,12 +228,12 @@ def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
     """
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO asakatu_table (user_id, sun, mon, tue, wed, thu, fri, sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat))
+    cursor.execute('INSERT INTO asakatu_table (user_id, sun, mon, tue, wed, thu, fri, sat, point) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat, point))
 
     conn.commit()
     conn.close()
 
-def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str):
+def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str, fri:str, sat:str, point:int):
     """
 
         Args:
@@ -250,9 +250,9 @@ def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
 
     cursor.execute('''
         UPDATE asakatu_table
-        SET sun = ?, mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?
+        SET sun = ?, mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?, point = ?,
         WHERE user_id = ?
-    ''', (sun, mon, tue, wed, thu, fri, sat, user_id))
+    ''', (sun, mon, tue, wed, thu, fri, sat, point, user_id))
 
     conn.commit()
     conn.close()
@@ -339,7 +339,8 @@ def main():
             thu = check_input("木曜日: ")
             fri = check_input("金曜日: ")
             sat = check_input("土曜日: ")
-            create_asataku_data(user_id, sun, mon, tue, wed, thu, fri, sat)
+            point = int(input("朝活ポイント: "))
+            create_asataku_data(user_id, sun, mon, tue, wed, thu, fri, sat, point)
         else:
             print("存在するTableを指定してください")
     elif args.operation == 'read':

@@ -164,7 +164,7 @@ def search_user_id(bd_addr:str) -> str:
     else:
         return None
 
-def search_asakatu(user_id:str, selected_week:str) -> str:
+def check_asakatu(user_id:str) -> str:
     """
 
         Args:
@@ -179,7 +179,9 @@ def search_asakatu(user_id:str, selected_week:str) -> str:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT {} FROM asakatu_table WHERE user_id = ?".format(selected_week), (user_id,))
+    week = datatime.now()strftime('%a').lower()
+
+    cursor.execute("SELECT {} FROM asakatu_table WHERE user_id = ?".format(week), (user_id,))
     result = cursor.fetchone()
 
     if result:
@@ -275,7 +277,7 @@ def delete_asakatu_data(user_id:str):
     conn.commit()
     conn.close()
 
-def check_activity_exists(user_id:str, day:str, time_threshold:str):
+def check_activity_exists(user_id:str, time_threshold:str):
     """
 
         Args:

@@ -111,11 +111,11 @@ def notion_api():
                 print("入室記録完了")
 
                 user_id = database_ctl.search_user_id(bd_addr=bd_addr)
-                result = database_ctl.search_asakatu(user_id=user_id, selected_week="fri")
-                formatted_date = "'" + datetime.now().strftime('%Y-%m-%d') + "'"
-                print(formatted_date)
-                exists = database_ctl.check_activity_exists(user_id=user_id, day=formatted_date, time_threshold=time_threshold)
-                print(exists)
+                result = database_ctl.check_asakatu(user_id=user_id)
+                if result == "1":
+                    exists = database_ctl.check_activity_exists(user_id=user_id, time_threshold=time_threshold)
+                    print(exists)
+                
             else:
                 print("データベースにユーザーが登録されていません")
     else:

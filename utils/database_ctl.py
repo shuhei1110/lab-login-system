@@ -250,7 +250,7 @@ def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
 
     cursor.execute('''
         UPDATE asakatu_table
-        SET sun = ?, mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?, point = ?,
+        SET sun = ?, mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?, point = ?
         WHERE user_id = ?
     ''', (sun, mon, tue, wed, thu, fri, sat, point, user_id))
 

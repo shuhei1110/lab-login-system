@@ -5,6 +5,16 @@ from utils import notion_api_ctl
 from config import config
 
 def print_datetime(f):
+    """実行時間を出力するためのデコレーター
+
+        Args:
+            f(): 実行する関数
+
+        Notes:
+            - 別に必要ない
+            - ロガーのデコレーターを作った時に必要なので作った
+
+    """
     def wrapper(*args, **kwargs):
         print(f'\033[34m--- Start process: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} ---\033[0m')
         f(*args, **kwargs)
@@ -13,6 +23,12 @@ def print_datetime(f):
 
 @print_datetime
 def main():
+    """BDアドレススキャン
+
+        Notes:
+            - bluetoothctlのコマンドはバージョンによって多少異なるので注意
+
+    """
     APP_PATH = config.APP_PATH
 
     current_date = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')

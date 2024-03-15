@@ -47,13 +47,13 @@ def load_json_data(entered:bool, query:bool=False) -> dict:
 
 
 def get_page_ids(entered:bool) -> list:
-    """
+    """Notionの各ページIDを取得する
 
         Args:
-            ():
+            ennterd(bool): Trueなら入室しているページID,Falseなら退室しているページID
 
         Responses
-            (): 
+            page_ids(list): ページIDのリスト 
 
         Notes:
 
@@ -66,13 +66,14 @@ def get_page_ids(entered:bool) -> list:
     return page_ids
 
 def change_status(notion_page_id:str, entered:bool) -> dict:
-    """
+    """ページのステータス（入退室）を変更する
 
         Args:
-            ():
+            notion_page_id(str): ページID
+            entered(bool): Trueで入室,Falseで退室
 
         Responses
-            (): 
+            response(dict): HTTPステータスコード 
 
         Notes:
 
@@ -84,13 +85,14 @@ def change_status(notion_page_id:str, entered:bool) -> dict:
     return response
 
 def change_point(notion_page_id:str, point:int) -> dict:
-    """
+    """各ページの朝活ポイントを変更する
 
         Args:
-            ():
+            notion_page_id(str): ページID
+            point(int): 変更後の朝活ポイント
 
         Responses
-            (): 
+            response(dict): HTTPステータスコード 
 
         Notes:
 
@@ -102,18 +104,17 @@ def change_point(notion_page_id:str, point:int) -> dict:
     return response
 
 def reset_status():
+    """ステータスをすべて退室にする
+
+        Notes:
+
+    """
     page_ids = get_page_ids(entered=True)
     for page_id in page_ids:
         response = change_status(notion_page_id=page_id, entered=False)
 
 def notion_api():
-    """
-
-        Args:
-            ():
-
-        Responses
-            (): 
+    """logファイルを参照して入退室とポイントを変更するためにAPIを叩きに行く
 
         Notes:
 
@@ -132,10 +133,9 @@ def notion_api():
                 result = database_ctl.check_asakatu(user_id=user_id)
                 if result == 1:
                     exists = database_ctl.check_activity_exists(user_id=user_id, time_threshold=time_threshold)
-                    if exists == 1:
+                    if exists == 0:
                         point = database_ctl.update_asakatu_point(user_id=user_id)
                         change_point(notion_page_id=notion_page_id, point=point)
-                
                 
             else:
                 print("データベースにユーザーが登録されていません")

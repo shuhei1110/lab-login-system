@@ -1,4 +1,6 @@
 """settings
+
+    - 変更しない設定
 """
 
 from config import config
@@ -50,13 +52,13 @@ json_data_out_filter = {
     }
 
 def make_json_data_point(point:int) -> dict:
-    """
+    """朝活ポイントを変更するためのJSONを作成
 
         Args:
-            ():
+            point(int): 新しい朝活ポイント
 
         Responses
-            (): 
+            json_data(dict): HTTPリクエストを行うためのJSONデータ 
 
         Notes:
 

@@ -1,4 +1,6 @@
 """database control
+
+    - データベース操作のライブラリ
 """
 import argparse
 import sqlite3
@@ -9,13 +11,12 @@ from config import config
 db_path = config.APP_PATH + "/db/user_database.db"
 
 def create_data(name:str, bd_addr:str, notion_id:str):
-    """
+    """user_tableにデータを追加する
 
         Args:
-            ():
-
-        Responses
-            (): 
+            name(str): ユーザー名
+            bd_addr(str): デバイスのBDアドレス
+            notion_id(str): 対応するNotionページID
 
         Notes:
 
@@ -29,13 +30,10 @@ def create_data(name:str, bd_addr:str, notion_id:str):
     conn.close()
 
 def read_data(table:str):
-    """
+    """テーブルを指定してデータを読む
 
         Args:
-            ():
-
-        Responses
-            (): 
+            table(str): 選択するテーブル名
 
         Notes:
 
@@ -51,13 +49,10 @@ def read_data(table:str):
     conn.close()
 
 def delete_data(id:int):
-    """
+    """user_tabelのレコードを削除する
 
         Args:
-            ():
-
-        Responses
-            (): 
+            id(int): 削除するレコードのID
 
         Notes:
 
@@ -70,14 +65,14 @@ def delete_data(id:int):
     conn.commit()
     conn.close()
 
-def update_data(id, new_name, new_bd_addr, new_notion_id):
-    """
+def update_data(id:int, new_name:str, new_bd_addr:str, new_notion_id:str):
+    """user_tableのレコードをアップデートする
 
         Args:
-            ():
-
-        Responses
-            (): 
+            id(int): 選択するユーザーID
+            new_name(str): 新しい名前
+            new_bd_addr(str): 新しいBDアドレス
+            new_notion_id(str): 新しいNotionページID
 
         Notes:
 

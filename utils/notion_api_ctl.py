@@ -115,7 +115,7 @@ def notion_api():
                 if result == 1:
                     exists = database_ctl.check_activity_exists(user_id=user_id, time_threshold=time_threshold)
                     if exists == 1:
-                        print(exists)
+                        database_ctl.update_asakatu_point(user_id=user_id)
                 
                 
             else:

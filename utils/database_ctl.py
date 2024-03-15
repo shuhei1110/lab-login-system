@@ -257,6 +257,31 @@ def update_asakatu_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
     conn.commit()
     conn.close()
 
+def update_asakatu_point(user_id:str):
+    """
+
+        Args:
+            ():
+
+        Responses
+            (): 
+
+        Notes:
+
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT point FROM asakatu_table WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    current_point = result[0]
+    
+    conn.close()
+
+    print(current_point)
+    print(type(current_point))
+
+
 def delete_asakatu_data(user_id:str):
     """
 

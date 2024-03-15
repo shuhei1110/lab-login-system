@@ -278,6 +278,8 @@ def update_asakatu_point(user_id:str):
 
     point = current_point + 1
 
+    print(point)
+
     cursor.execute('''
         UPDATE asakatu_table
         SET point = ?

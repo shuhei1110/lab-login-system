@@ -109,7 +109,7 @@ def notion_api():
                 print("入室記録完了")
 
                 user_id = database_ctl.search_user_id(bd_addr=bd_addr)
-                result = database_ctl.search_asakatu(user_id=user_id, "fri")
+                result = database_ctl.search_asakatu(user_id=user_id, selected_week="fri")
                 print(f'resutl: {result}')
             else:
                 print("データベースにユーザーが登録されていません")

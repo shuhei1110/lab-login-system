@@ -179,7 +179,7 @@ def check_asakatu(user_id:str) -> str:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    week = datatime.now()strftime('%a').lower()
+    week = datatime.now().strftime('%a').lower()
 
     cursor.execute("SELECT {} FROM asakatu_table WHERE user_id = ?".format(week), (user_id,))
     result = cursor.fetchone()

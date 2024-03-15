@@ -182,6 +182,8 @@ def search_asakatu(user_id:str, selected_week:str) -> str:
     cursor.execute("SELECT ? FROM asakatu_table WHERE user_id = ?", (selected_week, user_id))
     result = cursor.fetchone()
 
+    print(result)
+
     if result:
         return result[0]
     else:

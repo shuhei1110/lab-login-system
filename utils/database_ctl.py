@@ -180,7 +180,7 @@ def create_asataku_data(user_id:str, sun:str, mon:str, tue:str, wed:str, thu:str
     """
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO asataku_table (user_id, sun, mon, tue, wed, thu, fri, sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat))
+    cursor.execute('INSERT INTO asakatu_table (user_id, sun, mon, tue, wed, thu, fri, sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (user_id, sun, mon, tue, wed, thu, fri, sat))
 
     conn.commit()
     conn.close()
@@ -226,6 +226,8 @@ def main():
             fri = check_input("金曜日: ")
             sat = check_input("土曜日: ")
             create_asataku_data(user_id, sun, mon, tue, wed, thu, fri, sat)
+        else:
+            print("存在するTableを指定してください")
     elif args.operation == 'read':
         table = input('選択するTable: ')
         read_data(table=table)

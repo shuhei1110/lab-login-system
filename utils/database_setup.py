@@ -51,6 +51,7 @@ def main():
             thu BOOLEAN DEFAULT 0,
             fri BOOLEAN DEFAULT 0,
             sat BOOLEAN DEFAULT 0,
+            point INTEGER,
             FOREIGN KEY (user_id) REFERENCES user_table(id)
         )
     ''')

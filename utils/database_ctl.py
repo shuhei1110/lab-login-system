@@ -278,17 +278,14 @@ def update_asakatu_point(user_id:str):
 
     point = current_point + 1
 
-    print(point)
-
     cursor.execute('''
         UPDATE asakatu_table
         SET point = ?
         WHERE user_id = ?
     ''', (point, user_id))
+    conn.commit()
     
     conn.close()
-
-    print(current_point)
 
 
 def delete_asakatu_data(user_id:str):

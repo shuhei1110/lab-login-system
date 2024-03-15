@@ -355,7 +355,7 @@ def main():
             new_notion_id = input('新しいNotion Page ID: ')
             update_data(id_to_update, new_name, new_bd_addr, new_notion_id)
         elif table == "asakatu_table":
-            id_to_update = input('更新するユーザーのID: ')
+            user_id = input('更新するユーザーのID: ')
             sun = check_input("日曜日: ")
             mon = check_input("月曜日: ")
             tue = check_input("火曜日: ")
